@@ -6,6 +6,7 @@ import com.shop.product_service.dto.response.subcategory.CreateSubCategoryRespon
 import com.shop.product_service.dto.response.subcategory.GetAllSubCategoryResponse;
 import com.shop.product_service.dto.response.subcategory.GetByIdSubCategoryResponse;
 import com.shop.product_service.dto.response.subcategory.UpdateSubCategoryResponse;
+import com.shop.product_service.entity.SubCategory;
 
 import java.util.List;
 
@@ -16,4 +17,5 @@ public interface SubCategoryService {
     List<GetAllSubCategoryResponse> getAllSubCategory();
     GetByIdSubCategoryResponse getSubCategoryById(Long id);
     void deleteSubCategory(Long id);
+    List<GetAllSubCategoryResponse> subCategoryWithCategory(Long categoryId);
 }

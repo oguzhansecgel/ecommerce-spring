@@ -5,6 +5,7 @@ import com.shop.product_service.dto.request.subcategory.UpdateSubCategoryRequest
 import com.shop.product_service.dto.response.subcategory.CreateSubCategoryResponse;
 import com.shop.product_service.dto.response.subcategory.GetAllSubCategoryResponse;
 import com.shop.product_service.dto.response.subcategory.GetByIdSubCategoryResponse;
+import com.shop.product_service.dto.response.subcategory.UpdateSubCategoryResponse;
 import com.shop.product_service.entity.Category;
 import com.shop.product_service.entity.SubCategory;
 
@@ -31,7 +32,10 @@ public class SubCategoryMapper {
     {
         return new CreateSubCategoryResponse(from.getId(), from.getName(), from.getCategory().getId());
     }
-
+    public static UpdateSubCategoryResponse dtoToUpdateSubCategoryResponse(SubCategory from)
+    {
+        return new UpdateSubCategoryResponse(from.getId(), from.getName(), from.getCategory().getId());
+    }
     public static GetAllSubCategoryResponse toDto(SubCategory subCategory) {
         return new GetAllSubCategoryResponse(
                 subCategory.getId(),

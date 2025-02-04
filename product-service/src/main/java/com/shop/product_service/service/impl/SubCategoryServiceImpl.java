@@ -70,4 +70,10 @@ public class SubCategoryServiceImpl implements SubCategoryService {
         SubCategory subCategory = subCategoryRepository.findById(id).get();
         subCategoryRepository.delete(subCategory);
     }
+
+    @Override
+    public List<GetAllSubCategoryResponse> subCategoryWithCategory(Long categoryId) {
+        List<SubCategory> subCategories = subCategoryRepository.findSubCategoriesByCategory_Id(categoryId);
+        return SubCategoryMapper.dtoToGetAllSubCategoryResponse(subCategories);
+    }
 }

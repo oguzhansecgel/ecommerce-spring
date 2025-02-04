@@ -30,6 +30,12 @@ public class SubCategoryController {
     {
         return subCategoryService.getAllSubCategory();
     }
+
+    @GetMapping("/get/subcategory/with/category/{categoryId}")
+    public List<GetAllSubCategoryResponse> getAllSubCategoryWithCategory(@PathVariable Long categoryId)
+    {
+        return subCategoryService.subCategoryWithCategory(categoryId);
+    }
     @PostMapping("/create/subCategory")
     public CreateSubCategoryResponse createSubCategory(@RequestBody CreateSubCategoryRequest request)
     {

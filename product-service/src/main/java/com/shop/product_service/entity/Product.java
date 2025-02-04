@@ -1,6 +1,7 @@
 package com.shop.product_service.entity;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.Type;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -24,6 +25,7 @@ public class Product {
     @JoinColumn(name = "subcategory_id", nullable = false)
     private SubCategory subCategory;
 
+    @Column(columnDefinition = "jsonb")
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Attribute> attributes = new ArrayList<>();
 
