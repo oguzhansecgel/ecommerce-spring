@@ -18,7 +18,8 @@ public class SearchServicePublisher {
     private String createQueue;
     @Value("${rabbitmq.update.queue.name}")
     private String updateQueue;
-
+    @Value("${rabbitmq.delete.queue.name}")
+    private String deleteQueue;
     public SearchServicePublisher(RabbitTemplate rabbitTemplate) {
         this.rabbitTemplate = rabbitTemplate;
     }
@@ -32,5 +33,11 @@ public class SearchServicePublisher {
     {
         log.info("Product update", event);
         rabbitTemplate.convertAndSend(updateQueue,event);
+    }
+    public void deleteProductToSearchService(Long id)
+    {
+        log.info("Product deleted", id);
+        String stringId = id.toString();
+        rabbitTemplate.convertAndSend(deleteQueue,stringId);
     }
 }

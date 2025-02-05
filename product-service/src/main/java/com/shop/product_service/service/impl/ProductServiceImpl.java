@@ -70,7 +70,7 @@ public class ProductServiceImpl implements ProductService {
     public void deleteProduct(Long productId) {
         Product existingProduct = productRepository.findById(productId)
                 .orElseThrow(() -> new RuntimeException("Product not found"));
-
+        searchServicePublisher.deleteProductToSearchService(productId);
         productRepository.delete(existingProduct);
     }
 

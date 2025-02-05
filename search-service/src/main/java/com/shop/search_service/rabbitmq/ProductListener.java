@@ -39,4 +39,11 @@ public class ProductListener {
         product.setPrice(event.getPrice());
         searchServiceRepository.save(product);
     }
+    @RabbitListener(queues = "${rabbitmq.delete.queue.name}")
+    public void process(String id)
+    {
+        log.info("Product Deleted Successfully");
+        System.out.println("*******************************************************************************");
+        searchServiceRepository.deleteById(id);
+    }
 }

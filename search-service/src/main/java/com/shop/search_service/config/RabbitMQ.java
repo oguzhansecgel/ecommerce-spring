@@ -14,19 +14,26 @@ import org.springframework.context.annotation.Configuration;
 @EnableRabbit
 public class RabbitMQ {
 
+
     @Value("${rabbitmq.queue.name}")
     private String firstQueue;
 
     @Value("${rabbitmq.update.queue.name}")
     private String secondQueue;
 
+    @Value("${rabbitmq.delete.queue.name}")
+    private String thirdQueue;
+
     @Value("${rabbitmq.exchange.name}")
     private String exchangeName;
 
     @Value("${rabbitmq.routing.key}")
     private String routingKey;
+
     @Value("${rabbitmq.update.routing.key}")
     private String secondRoutingKey;
+    @Value("${rabbitmq.delete.routing.key}")
+    private String thirdRoutingKey;
 
     @Bean
     Queue queue() {
@@ -36,7 +43,10 @@ public class RabbitMQ {
     Queue secondQueue() {
         return new Queue(secondQueue, false);
     }
-
+    @Bean
+    Queue thirdQueue() {
+        return new Queue(thirdQueue, false);
+    }
     @Bean
     Binding binding(Queue queue, DirectExchange exchange) {
         return BindingBuilder.bind(queue).to(exchange).with(routingKey);
@@ -46,10 +56,13 @@ public class RabbitMQ {
         return BindingBuilder.bind(queue).to(exchange).with(secondRoutingKey);
     }
     @Bean
+    Binding bindingThird(Queue queue, DirectExchange exchange) {
+        return BindingBuilder.bind(queue).to(exchange).with(thirdRoutingKey);
+    }
+    @Bean
     DirectExchange exchange() {
         return new DirectExchange(exchangeName);
     }
-
     @Bean
     public MessageConverter converter(){
         return new Jackson2JsonMessageConverter();
