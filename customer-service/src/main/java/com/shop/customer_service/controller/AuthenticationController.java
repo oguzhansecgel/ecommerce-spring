@@ -7,7 +7,6 @@ import com.shop.customer_service.service.AuthenticationService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Optional;
 @RestController
 @RequestMapping("/api/v1/auth")
 public class AuthenticationController {
