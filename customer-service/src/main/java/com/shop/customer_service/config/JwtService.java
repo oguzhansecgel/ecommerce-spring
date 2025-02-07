@@ -1,8 +1,7 @@
 package com.shop.customer_service.config;
 
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import com.shop.customer_service.entity.User;
+import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -36,16 +35,28 @@ public class JwtService {
     }
     public String generateToken(Map<String, Object> claims, UserDetails userDetails)
     {
+        int customerId = ((User) userDetails).getId();
+        claims.put("customerId", customerId);
         return Jwts.builder()
                 .setClaims(claims)
                 .setSubject(userDetails.getUsername())
-
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis()+1000 * 60 * 24))
                 .signWith(getSignInKey(), SignatureAlgorithm.HS256)
                 .compact();
     }
-
+    public int extractUserIdFromToken(String token) {
+        try {
+            Jws<Claims> claimsJws = Jwts.parserBuilder()
+                    .setSigningKey(getSignInKey())
+                    .build()
+                    .parseClaimsJws(token);
+            Claims claims = claimsJws.getBody();
+            return (Integer) claims.get("customerId");
+        } catch (JwtException e) {
+            throw new RuntimeException("Invalid JWT token", e);
+        }
+    }
     public boolean isTokenValid(String token,UserDetails userDetails)
     {
         final String username = extractUsername(token);

@@ -1,4 +1,4 @@
-package com.shop.customer_service.dto.request;
+package com.shop.customer_service.dto.request.user;
 
 public class AuthenticationRequest {
 

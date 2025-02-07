@@ -1,4 +1,4 @@
-package com.shop.customer_service.dto.response;
+package com.shop.customer_service.dto.response.user;
 
 public class RegisterResponse {
     private String firstName;

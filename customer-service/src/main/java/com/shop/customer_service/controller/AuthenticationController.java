@@ -1,8 +1,8 @@
 package com.shop.customer_service.controller;
-import com.shop.customer_service.dto.request.AuthenticationRequest;
-import com.shop.customer_service.dto.request.RegisterRequest;
-import com.shop.customer_service.dto.response.LoginResponse;
-import com.shop.customer_service.dto.response.RegisterResponse;
+import com.shop.customer_service.dto.request.user.AuthenticationRequest;
+import com.shop.customer_service.dto.request.user.RegisterRequest;
+import com.shop.customer_service.dto.response.user.LoginResponse;
+import com.shop.customer_service.dto.response.user.RegisterResponse;
 import com.shop.customer_service.service.AuthenticationService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -29,9 +29,10 @@ public class AuthenticationController {
         return ResponseEntity.ok(authenticationService.register(request));
     }
     @PostMapping("/login")
-    public ResponseEntity<LoginResponse> register(@RequestBody AuthenticationRequest request)
+    public ResponseEntity<LoginResponse> login(@RequestBody AuthenticationRequest request)
     {
         return ResponseEntity.ok(authenticationService.authenticate(request));
 
     }
+
 }

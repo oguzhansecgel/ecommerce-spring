@@ -1,10 +1,10 @@
 package com.shop.customer_service.service;
 
 import com.shop.customer_service.config.JwtService;
-import com.shop.customer_service.dto.request.AuthenticationRequest;
-import com.shop.customer_service.dto.request.RegisterRequest;
-import com.shop.customer_service.dto.response.LoginResponse;
-import com.shop.customer_service.dto.response.RegisterResponse;
+import com.shop.customer_service.dto.request.user.AuthenticationRequest;
+import com.shop.customer_service.dto.request.user.RegisterRequest;
+import com.shop.customer_service.dto.response.user.LoginResponse;
+import com.shop.customer_service.dto.response.user.RegisterResponse;
 import com.shop.customer_service.entity.Role;
 import com.shop.customer_service.entity.User;
 import com.shop.customer_service.repository.UserRepository;
@@ -54,4 +54,6 @@ public class AuthenticationService {
         Optional<User> user = userRepository.findById(id);
         return user.map(CustomerMapping.INSTANCE::getByIdCustomer);
     }*/
+
+
 }

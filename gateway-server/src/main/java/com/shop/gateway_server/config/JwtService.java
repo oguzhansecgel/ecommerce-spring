@@ -1,6 +1,8 @@
 package com.shop.gateway_server.config;
 
+import com.shop.gateway_server.exception.CustomJwtException;
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
@@ -20,26 +22,18 @@ public class JwtService {
     private static final String SECRET_KEY = "";
 
     public String extractUsername(String jwt) {
-        return extractClaim(jwt, Claims::getSubject);
+        try {
+            return extractClaim(jwt, Claims::getSubject);
+        } catch (ExpiredJwtException ex) {
+            throw new CustomJwtException("Token süresi doldu, lütfen tekrar giris yapınız.", ex);
+        } catch (Exception ex) {
+            throw new CustomJwtException("Token dogrulama hatasi.", ex);
+        }
     }
 
     public <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
         final Claims claims = extractAllClaims(token);
         return claimsResolver.apply(claims);
-    }
-
-    public String generateToken(UserDetails userDetails) {
-        return generateToken(new HashMap<>(), userDetails);
-    }
-
-    public String generateToken(Map<String, Object> claims, UserDetails userDetails) {
-        return Jwts.builder()
-                .setClaims(claims)
-                .setSubject(userDetails.getUsername())
-                .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 24))
-                .signWith(getSignInKey(), SignatureAlgorithm.HS256)
-                .compact();
     }
 
     public boolean isTokenValid(String token, UserDetails userDetails) {

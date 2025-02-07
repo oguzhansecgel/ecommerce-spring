@@ -22,7 +22,8 @@ public class User implements UserDetails {
 
     @Enumerated(EnumType.STRING)
     private Role role;
-
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Address> addresses;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -69,6 +70,7 @@ public class User implements UserDetails {
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
                 ", role=" + role +
+                ", addresses=" + addresses +
                 '}';
     }
 
@@ -116,12 +118,21 @@ public class User implements UserDetails {
         this.role = role;
     }
 
-    public User(int id, String firstname, String lastname, String email, String password, Role role) {
+    public List<Address> getAddresses() {
+        return addresses;
+    }
+
+    public void setAddresses(List<Address> addresses) {
+        this.addresses = addresses;
+    }
+
+    public User(int id, String firstname, String lastname, String email, String password, Role role, List<Address> addresses) {
         this.id = id;
         this.firstname = firstname;
         this.lastname = lastname;
         this.email = email;
         this.password = password;
         this.role = role;
+        this.addresses = addresses;
     }
 }

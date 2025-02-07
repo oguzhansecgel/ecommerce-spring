@@ -3,12 +3,36 @@ spring:
     name: gateway-server
   cloud:
     gateway:
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins:
+              - "http://172.18.32.1:5501"
+              - "http://localhost:5501"
+            allowedMethods:
+              - GET
+              - POST
+              - PUT
+              - DELETE
+              - OPTIONS
+            allowedHeaders: "*"
+            exposedHeaders:
+              - "Authorization"
+            allowCredentials: true
       mvc:
         routes:
           - id: product-service
             uri: lb://product-service
             predicates:
               - Path=/api/v1/product/**
+            filters:
+              - name: RequestHeaderToRequestUri
+                args:
+                  name: Authorization
+          - id: category-service
+            uri: lb://product-service
+            predicates:
+              - Path=/api/v1/category/**
             filters:
               - name: RequestHeaderToRequestUri
                 args:
@@ -20,7 +44,23 @@ spring:
             filters:
               - name: RequestHeaderToRequestUri
                 args:
-                  name : Authorization
+                  name: Authorization
+          - id: customer-service
+            uri: lb://customer-service
+            predicates:
+              - Path=/api/v1/auth/**
+            filters:
+              - name: RequestHeaderToRequestUri
+                args:
+                  name: Authorization
+          - id: address-service
+            uri: lb://customer-service
+            predicates:
+              - Path=/api/v1/address/**
+            filters:
+              - name: RequestHeaderToRequestUri
+                args:
+                  name: Authorization
 
 eureka:
   client:
