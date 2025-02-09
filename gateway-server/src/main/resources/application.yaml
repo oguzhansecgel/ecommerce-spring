@@ -1,66 +1,41 @@
 spring:
+  main:
+    web-application-type: reactive
   application:
     name: gateway-server
   cloud:
     gateway:
-      globalcors:
-        corsConfigurations:
-          '[/**]':
-            allowedOrigins:
-              - "http://172.18.32.1:5501"
-              - "http://localhost:5501"
-            allowedMethods:
-              - GET
-              - POST
-              - PUT
-              - DELETE
-              - OPTIONS
-            allowedHeaders: "*"
-            exposedHeaders:
-              - "Authorization"
-            allowCredentials: true
-      mvc:
-        routes:
-          - id: product-service
-            uri: lb://product-service
-            predicates:
-              - Path=/api/v1/product/**
-            filters:
-              - name: RequestHeaderToRequestUri
-                args:
-                  name: Authorization
-          - id: category-service
-            uri: lb://product-service
-            predicates:
-              - Path=/api/v1/category/**
-            filters:
-              - name: RequestHeaderToRequestUri
-                args:
-                  name: Authorization
-          - id: search-service
-            uri: lb://search-service
-            predicates:
-              - Path=/api/v1/search/**
-            filters:
-              - name: RequestHeaderToRequestUri
-                args:
-                  name: Authorization
-          - id: customer-service
-            uri: lb://customer-service
-            predicates:
-              - Path=/api/v1/auth/**
-            filters:
-              - name: RequestHeaderToRequestUri
-                args:
-                  name: Authorization
-          - id: address-service
-            uri: lb://customer-service
-            predicates:
-              - Path=/api/v1/address/**
-            filters:
-              - name: RequestHeaderToRequestUri
-                args:
-                  name: Authorization
+      routes:
+        - id: product-service
+          uri: lb://product-service
+          predicates:
+            - Path=/api/v1/product/**
+          filters:
+            - name: JwtAuthenticationFilter
+        - id: category-service
+          uri: lb://product-service
+          predicates:
+            - Path=/api/v1/category/**
+          filters:
+            - name: JwtAuthenticationFilter
+        - id: search-service
+          uri: lb://search-service
+          predicates:
+            - Path=/api/v1/search/**
+          filters:
+            - name: JwtAuthenticationFilter
+        - id: customer-service
+          uri: lb://customer-service
+          predicates:
+            - Path=/api/v1/auth/**
+          filters:
+            - name: JwtAuthenticationFilter
+        - id: address-service
+          uri: lb://customer-service
+          predicates:
+            - Path=/api/v1/address/**
+          filters:
+            - name: JwtAuthenticationFilter
 
 eureka:
   client:
@@ -71,3 +46,11 @@ eureka:
 
 server:
   port: 8080
+logging:
+  level:
+    org.springframework.security: DEBUG
+    org.springframework.cloud.gateway: DEBUG
+    root: INFO
+
+
+
