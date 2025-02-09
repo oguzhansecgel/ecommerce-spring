@@ -18,6 +18,12 @@ spring:
             - Path=/api/v1/category/**
           filters:
             - name: JwtAuthenticationFilter
+        - id: sub-category-service
+          uri: lb://product-service
+          predicates:
+            - Path=/api/v1/subCategory/**
+          filters:
+            - name: JwtAuthenticationFilter
         - id: search-service
           uri: lb://search-service
           predicates:

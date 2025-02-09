@@ -1,5 +1,6 @@
 package com.shop.customer_service.config;
 
+import com.shop.customer_service.entity.Role;
 import com.shop.customer_service.entity.User;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
@@ -36,7 +37,9 @@ public class JwtService {
     public String generateToken(Map<String, Object> claims, UserDetails userDetails)
     {
         int customerId = ((User) userDetails).getId();
+        Role role = ((User) userDetails).getRole();
         claims.put("customerId", customerId);
+        claims.put("role", role);
         return Jwts.builder()
                 .setClaims(claims)
                 .setSubject(userDetails.getUsername())

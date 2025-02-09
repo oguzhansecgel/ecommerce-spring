@@ -11,19 +11,14 @@ import java.util.function.Predicate;
 @Component
 public class RouterValidator {
     private final Logger logger = LoggerFactory.getLogger(JwtAuthenticationFilter.class);
+    // doğrulama istenilen endpointler
     public static final List<String> openApiEndpoints = List.of(
-            "/auth/register",
-            "/auth/login",
-            "/auth/refresh",
-            "/api/v1/product/get/all/products"
+            "/api/v1/product/get/all/products",
+            "/api/v1/subCategory/get/all/subCategory"
     );
 
     public Predicate<ServerHttpRequest> isSecured =
-            request -> {
-                boolean isSecured = openApiEndpoints
-                        .stream()
-                        .noneMatch(uri -> request.getURI().getPath().contains(uri));
-                logger.info("İstek Yolu: {}, Korunmalı mı: {}", request.getURI().getPath(), isSecured); // Log Ekle
-                return isSecured;
-            };
+            request -> openApiEndpoints
+                    .stream()
+                    .anyMatch(uri -> request.getURI().getPath().contains(uri));
 }

@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import java.security.Key;
 import java.util.Date;
+import java.util.List;
 import java.util.function.Function;
 
 @Service
@@ -13,6 +14,10 @@ public class JwtService {
 
     public static final String SECRET_KEY = "c69932776957fb3a2c54609519a4b8ff7d6fca8060ee2bbe9b1fe4b920f1d737";
 
+    public List<String> extractRoles(String token) {
+        Claims claims = extractAllClaims(token);
+        return claims.get("role", List.class);
+    }
     public String extractUsername(String token) {
         return extractClaim(token, Claims::getSubject);
     }
@@ -35,19 +40,8 @@ public class JwtService {
     }
 
     public Boolean validateToken(String token) {
-        try {
             Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(token);
             return !isTokenExpired(token);
-        } catch (SignatureException e) {
-            throw new RuntimeException("Invalid JWT signature");
-        } catch (MalformedJwtException e) {
-            throw new RuntimeException("Invalid JWT token");
-        } catch (ExpiredJwtException e) {
-            throw new RuntimeException("Expired JWT token");
-        } catch (UnsupportedJwtException e) {
-            throw new RuntimeException("Unsupported JWT token");
-        } catch (IllegalArgumentException e) {
-            throw new RuntimeException("JWT claims string is empty");
-        }
+
     }
 }

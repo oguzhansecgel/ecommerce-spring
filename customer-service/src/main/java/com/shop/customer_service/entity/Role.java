@@ -1,7 +1,7 @@
 package com.shop.customer_service.entity;
 
 public enum Role {
-    ADMIN,
-    CUSTOMER,
-    MODERATOR
+    ROLE_ADMIN,
+    ROLE_CUSTOMER,
+    ROLE_MODERATOR
 }
