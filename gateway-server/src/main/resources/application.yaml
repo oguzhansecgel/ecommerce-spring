@@ -10,38 +10,28 @@ spring:
           uri: lb://product-service
           predicates:
             - Path=/api/v1/product/**
-          filters:
-            - name: JwtAuthenticationFilter
         - id: category-service
           uri: lb://product-service
           predicates:
             - Path=/api/v1/category/**
-          filters:
-            - name: JwtAuthenticationFilter
         - id: sub-category-service
           uri: lb://product-service
           predicates:
             - Path=/api/v1/subCategory/**
-          filters:
-            - name: JwtAuthenticationFilter
         - id: search-service
           uri: lb://search-service
           predicates:
             - Path=/api/v1/search/**
-          filters:
-            - name: JwtAuthenticationFilter
         - id: customer-service
           uri: lb://customer-service
           predicates:
             - Path=/api/v1/auth/**
-          filters:
-            - name: JwtAuthenticationFilter
+
         - id: address-service
           uri: lb://customer-service
           predicates:
             - Path=/api/v1/address/**
-          filters:
-            - name: JwtAuthenticationFilter
+
 
 eureka:
   client:
