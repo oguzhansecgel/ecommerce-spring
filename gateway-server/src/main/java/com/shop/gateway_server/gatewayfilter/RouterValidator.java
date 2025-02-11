@@ -16,7 +16,6 @@ public class RouterValidator {
     public static final List<String> authenticatedApiEndpoints = List.of(
             "/api/v1/product/get/all/products",
             "/api/v1/product/get/all/subcategory/\\d+"
-            // Diğer kimlik doğrulama gerektiren endpointleri buraya ekleyebilirsin
     );
 
 

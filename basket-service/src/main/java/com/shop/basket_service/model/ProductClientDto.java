@@ -1,0 +1,84 @@
+package com.shop.basket_service.model;
+
+import java.math.BigDecimal;
+
+public class ProductClientDto {
+    private Long id;
+    private String name;
+    private BigDecimal price;
+    private String description;
+    private int stock;
+    private Long subCategoryId;
+
+    public ProductClientDto() {
+    }
+
+    public ProductClientDto(Long id, String name, BigDecimal price, String description, int stock, Long subCategoryId) {
+        this.id = id;
+        this.name = name;
+        this.price = price;
+        this.description = description;
+        this.stock = stock;
+        this.subCategoryId = subCategoryId;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public BigDecimal getPrice() {
+        return price;
+    }
+
+    public void setPrice(BigDecimal price) {
+        this.price = price;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public int getStock() {
+        return stock;
+    }
+
+    public void setStock(int stock) {
+        this.stock = stock;
+    }
+
+    public Long getSubCategoryId() {
+        return subCategoryId;
+    }
+
+    public void setSubCategoryId(Long subCategoryId) {
+        this.subCategoryId = subCategoryId;
+    }
+
+    @Override
+    public String toString() {
+        return "ProductClientDto{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", price=" + price +
+                ", description='" + description + '\'' +
+                ", stock=" + stock +
+                ", subCategoryId=" + subCategoryId +
+                '}';
+    }
+}

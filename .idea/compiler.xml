@@ -9,6 +9,7 @@
         <module name="product-service" />
         <module name="gateway-server" />
         <module name="discovery-server" />
+        <module name="basket-service" />
         <module name="common" />
         <module name="search-service" />
       </profile>
@@ -28,6 +29,7 @@
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="basket-service" options="-parameters" />
       <module name="customer-service" options="-parameters" />
       <module name="discovery-server" options="-parameters" />
       <module name="gateway-server" options="-parameters" />

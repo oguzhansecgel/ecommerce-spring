@@ -26,11 +26,14 @@ spring:
           uri: lb://customer-service
           predicates:
             - Path=/api/v1/auth/**
-
         - id: address-service
           uri: lb://customer-service
           predicates:
             - Path=/api/v1/address/**
+        - id: basket-service
+          uri: lb://basket-service
+          predicates:
+            - Path=/api/v1/basket/**
 
 
 eureka:
