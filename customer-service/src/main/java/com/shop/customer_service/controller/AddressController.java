@@ -42,11 +42,10 @@ public class AddressController {
     public List<GetAllAddressResponse> getAllAddresses() {
         return addressService.getAllAddresses();
     }
-    @GetMapping("/get/by/address/with/customer")
-    public List<GetAddressByCustomer> getAddressByCustomers(@RequestHeader("Authorization") String authHeader)
+
+    @GetMapping("/get/by/address/with/customer/{userId}")
+    public List<GetAddressByCustomer> getAddressByCustomers(@PathVariable Integer userId)
     {
-        String token = authHeader.substring(7);
-        int userId = jwtService.extractUserIdFromToken(token);
         return addressService.getAddressByCustomers(userId);
     }
 

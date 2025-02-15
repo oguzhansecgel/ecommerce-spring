@@ -20,7 +20,11 @@ public class BasketController {
         this.basketService = basketService;
         this.jwtService = jwtService;
     }
-
+    @GetMapping("/find/basket/by/customer/{customerId}")
+    public Basket findByBasketCustomerId(@PathVariable("customerId") int customerId)
+    {
+        return basketService.findBasketByCustomerId(customerId);
+    }
     @PostMapping("/create/basket")
     public ResponseEntity<Basket> createBasketItem(@RequestHeader("Authorization") String token, @RequestBody Map<Long, Integer> productQuantities) {
         String tokenTrim = token.trim();

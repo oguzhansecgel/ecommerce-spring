@@ -43,15 +43,12 @@ public class JwtAuthenticationFilter implements WebFilter {
         logger.info("Requested Path: {}", path);
         logger.info("Is Public Endpoint: {}", isPublicEndpoint(path));
 
-        // Eğer izin verilen bir endpoint ise, JWT kontrolünü atlıyoruz
         if (!isAuthenticatedEndpoint(path)) {
             logger.info("****************************** Bypassing authentication for public endpoint");
             return chain.filter(exchange);
         }
 
-        // JWT token'ı Header'dan alıyoruz
         String token = extractToken(exchange);
-
         if (token != null) {
             try {
                 jwtService.validateToken(token);
@@ -81,12 +78,11 @@ public class JwtAuthenticationFilter implements WebFilter {
     private String extractToken(ServerWebExchange exchange) {
         String authHeader = exchange.getRequest().getHeaders().getFirst(HttpHeaders.AUTHORIZATION);
         if (authHeader != null && authHeader.startsWith("Bearer ")) {
-            return authHeader.substring(7); // "Bearer " kısmını çıkarıyoruz
+            return authHeader.substring(7);
         }
         return null;
     }
 
-    // Belirtilen endpoint'in izin verilen listede olup olmadığını kontrol ediyoruz
     private boolean isPublicEndpoint(String path) {
         System.out.println("***************************** PATH: "+path);
         return RouterValidator.openApiEndpoints.stream()

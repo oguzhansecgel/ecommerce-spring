@@ -38,13 +38,17 @@ public class JwtService {
     {
         int customerId = ((User) userDetails).getId();
         Role role = ((User) userDetails).getRole();
+        String name = ((User) userDetails).getUsername();
+        String surname = ((User) userDetails).getUsername();
         claims.put("customerId", customerId);
         claims.put("role", role);
+        claims.put("name", name);
+        claims.put("surname", surname);
         return Jwts.builder()
                 .setClaims(claims)
                 .setSubject(userDetails.getUsername())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis()+1000 * 60 * 24))
+                .setExpiration(new Date(System.currentTimeMillis()+100 * 60 * 24))
                 .signWith(getSignInKey(), SignatureAlgorithm.HS256)
                 .compact();
     }
