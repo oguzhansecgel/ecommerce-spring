@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface BasketRepository extends MongoRepository<Basket, String> {
-    Basket findByCustomerId(int customerId);
-    Basket findBasketByCustomerId(int customerId);
+    Basket findByCustomerId(String customerId);
+    Basket findBasketByCustomerId(String customerId);
 }

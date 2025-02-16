@@ -23,11 +23,11 @@ public class BasketService {
         this.basketRepository = basketRepository;
         this.productClient = productClient;
     }
-    public Basket findBasketByCustomerId(Integer customerId)
+    public Basket findBasketByCustomerId(String customerId)
     {
         return basketRepository.findBasketByCustomerId(customerId);
     }
-    public Basket createBasket(int customerId, Map<Long, Integer> productQuantities) {
+    public Basket createBasket(String customerId, Map<Long, Integer> productQuantities) {
         Basket basket = basketRepository.findByCustomerId(customerId);
 
         if (basket == null) {

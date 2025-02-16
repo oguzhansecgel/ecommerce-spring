@@ -29,7 +29,6 @@ public class SecurityConfig {
                 .authorizeExchange(exchanges ->
                         exchanges
                                 .pathMatchers("/api/v1/auth/**").permitAll()
-                                .pathMatchers("/api/v1/product/get/all/products").hasRole("CUSTOMER")
                                 .pathMatchers("/api/v1/product/**").permitAll()
                                 .pathMatchers("/api/v1/search/**").permitAll()
                                 .pathMatchers("/api/v1/basket/**").permitAll()

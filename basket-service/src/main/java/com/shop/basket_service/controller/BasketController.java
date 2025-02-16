@@ -2,7 +2,6 @@ package com.shop.basket_service.controller;
 
 import com.shop.basket_service.model.Basket;
 import com.shop.basket_service.service.BasketService;
-import com.shop.basket_service.service.JwtService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,23 +13,19 @@ import java.util.Map;
 public class BasketController {
 
     private final BasketService basketService;
-    private final JwtService jwtService;
 
-    public BasketController(BasketService basketService, JwtService jwtService) {
+    public BasketController(BasketService basketService) {
         this.basketService = basketService;
-        this.jwtService = jwtService;
     }
     @GetMapping("/find/basket/by/customer/{customerId}")
-    public Basket findByBasketCustomerId(@PathVariable("customerId") int customerId)
+    public Basket findByBasketCustomerId(@PathVariable("customerId") String customerId)
     {
         return basketService.findBasketByCustomerId(customerId);
     }
     @PostMapping("/create/basket")
-    public ResponseEntity<Basket> createBasketItem(@RequestHeader("Authorization") String token, @RequestBody Map<Long, Integer> productQuantities) {
-        String tokenTrim = token.trim();
-        String substring = tokenTrim.substring(7);
-        Integer customerId = jwtService.extractUserIdFromToken(substring);
-        Basket basket = basketService.createBasket(customerId, productQuantities);
+    public ResponseEntity<Basket> createBasketItem(@RequestHeader("X-UserId") String userId, @RequestBody Map<Long, Integer> productQuantities) {
+        System.out.println("USERID"+userId);
+        Basket basket = basketService.createBasket(userId, productQuantities);
         return new ResponseEntity<>(basket, HttpStatus.CREATED);
     }
 }

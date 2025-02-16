@@ -1,8 +1,6 @@
 package com.shop.gateway_server.gatewayfilter;
 
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.JwtException;
-import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.stereotype.Service;
@@ -26,8 +24,7 @@ public class JwtService {
 
     public List<String> extractRoles(String token) {
         Claims claims = extractAllClaims(token);
-        String role = claims.get("role", String.class);  // Tekil "role" anahtarını çekiyoruz
-        System.out.println("********************* ROLE : " + role);
+        String role = claims.get("role", String.class);
 
         return role != null ? Collections.singletonList(role) : Collections.emptyList();
     }
@@ -47,7 +44,7 @@ public class JwtService {
 
     private Claims extractAllClaims(String token) {
         return Jwts.parserBuilder()
-                .setSigningKey(signingKey)  // Burada getSignInKey() yerine signingKey kullanıyoruz
+                .setSigningKey(signingKey)
                 .build()
                 .parseClaimsJws(token)
                 .getBody();
@@ -56,19 +53,31 @@ public class JwtService {
     private Boolean isTokenExpired(String token) {
         return extractExpiration(token).before(new Date());
     }
-
+    public int extractUserIdFromToken(String token) {
+        try {
+            Jws<Claims> claimsJws = Jwts.parserBuilder()
+                    .setSigningKey(getSignInKey())
+                    .build()
+                    .parseClaimsJws(token);
+            Claims claims = claimsJws.getBody();
+            return (Integer) claims.get("customerId");
+        } catch (JwtException e) {
+            throw new RuntimeException("Invalid JWT token", e);
+        }
+    }
     public void validateToken(String token) {
         try {
-            System.out.println("***************************** token validate edildi");
             Claims claims = Jwts.parserBuilder()
                     .setSigningKey(signingKey)
                     .build()
                     .parseClaimsJws(token)
                     .getBody();
-            System.out.println("************* Claims: " + claims);
-        } catch (JwtException | IllegalArgumentException e) {
-            System.out.println("**************************** token valid edilemedi");
-            throw new RuntimeException("Invalid JWT token", e);
+        } catch (ExpiredJwtException e) {
+            throw new ExpiredJwtException(null,null,"Token süresi dolmuş");
         }
+    }
+    private Key getSignInKey() {
+        byte[] keyBytes = Decoders.BASE64.decode(SECRET_KEY);
+        return Keys.hmacShaKeyFor(keyBytes);
     }
 }

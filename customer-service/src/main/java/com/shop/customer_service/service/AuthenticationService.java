@@ -3,8 +3,10 @@ package com.shop.customer_service.service;
 import com.shop.customer_service.config.JwtService;
 import com.shop.customer_service.dto.request.user.AuthenticationRequest;
 import com.shop.customer_service.dto.request.user.RegisterRequest;
+import com.shop.customer_service.dto.request.user.TokenRefreshRequest;
 import com.shop.customer_service.dto.response.user.LoginResponse;
 import com.shop.customer_service.dto.response.user.RegisterResponse;
+import com.shop.customer_service.dto.response.user.TokenResponse;
 import com.shop.customer_service.dto.response.user.UserInfoResponse;
 import com.shop.customer_service.entity.BlacklistToken;
 import com.shop.customer_service.entity.Role;
@@ -13,6 +15,7 @@ import com.shop.customer_service.repository.BlacklistRepository;
 import com.shop.customer_service.repository.UserRepository;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -61,6 +64,22 @@ public class AuthenticationService {
         String jwtToken = jwtService.generateToken(user);
         return new LoginResponse(jwtToken, user.getRole().toString(),user.getFirstname(), user.getLastname(), user.getId());
 
+    }
+    public TokenResponse refreshToken(TokenRefreshRequest refreshRequest) {
+        String refreshToken = refreshRequest.getRefreshToken();
+        if (jwtService.isRefreshTokenValid(refreshToken)) {
+            String username = jwtService.extractUsername(refreshToken);
+            User user = userRepository.findByEmail(username)
+                    .orElseThrow(() -> new RuntimeException("User not found"));
+
+            String newAccessToken = jwtService.generateToken(user);
+
+            String newRefreshToken = jwtService.generateRefreshToken(user);
+
+            return new TokenResponse(newAccessToken, newRefreshToken);
+        } else {
+            throw new RuntimeException("Invalid refresh token");
+        }
     }
     public UserInfoResponse userInfo(int customerId)
     {

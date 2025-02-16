@@ -1,10 +1,20 @@
 spring:
-  main:
-    web-application-type: reactive
   application:
     name: gateway-server
   cloud:
     gateway:
+      globalcors:
+        corsConfigurations:
+          '[/**]': # Tüm yollar için CORS ayarlarını uygula
+            allowedOrigins: "http://172.18.32.1:5501" # Frontend tarafındaki domaini buraya ekle
+            allowedMethods:
+              - GET
+              - POST
+              - PUT
+              - DELETE
+              - OPTIONS
+            allowedHeaders: "*"
+            allowCredentials: true
       routes:
         - id: product-service
           uri: lb://product-service
@@ -34,7 +44,6 @@ spring:
           uri: lb://basket-service
           predicates:
             - Path=/api/v1/basket/**
-
 
 eureka:
   client:

@@ -10,7 +10,7 @@ import java.util.List;
 public class Basket {
     @Id
     private String id;
-    private int customerId;
+    private String customerId;
     private List<BasketItem> basketItems;
     private BigDecimal totalPrice;
 
@@ -19,7 +19,7 @@ public class Basket {
     public Basket() {
     }
 
-    public Basket(String id, int customerId, List<BasketItem> basketItems, BigDecimal totalPrice) {
+    public Basket(String id, String customerId, List<BasketItem> basketItems, BigDecimal totalPrice) {
         this.id = id;
         this.customerId = customerId;
         this.basketItems = basketItems;
@@ -34,11 +34,11 @@ public class Basket {
         this.id = id;
     }
 
-    public int getCustomerId() {
+    public String getCustomerId() {
         return customerId;
     }
 
-    public void setCustomerId(int customerId) {
+    public void setCustomerId(String customerId) {
         this.customerId = customerId;
     }
 
