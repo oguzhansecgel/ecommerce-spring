@@ -72,7 +72,39 @@ public class BasketService {
 
         return basketRepository.save(basket);
     }
+    public Basket removeFromBasket(String customerId, Map<Long, Integer> productQuantities) {
+        Basket basket = basketRepository.findByCustomerId(customerId);
+        if (basket == null) {
+            throw new RuntimeException("Sepet bulunamadı!");
+        }
 
+        List<BasketItem> items = basket.getBasketItems();
+        BigDecimal totalPrice = basket.getTotalPrice();
+
+        for (Map.Entry<Long, Integer> entry : productQuantities.entrySet()) {
+            Long productId = entry.getKey();
+            Integer quantityToRemove = entry.getValue() != null ? entry.getValue() : 1;
+
+            BasketItem existingItem = findBasketItemByProductId(items, productId);
+            if (existingItem == null) continue;
+
+            int newQuantity = existingItem.getQuantity() - quantityToRemove;
+            BigDecimal productPrice = existingItem.getProduct().getPrice();
+
+            if (newQuantity <= 0) {
+                items.remove(existingItem);
+                totalPrice = totalPrice.subtract(productPrice.multiply(BigDecimal.valueOf(existingItem.getQuantity())));
+            } else {
+                existingItem.setQuantity(newQuantity);
+                totalPrice = totalPrice.subtract(productPrice.multiply(BigDecimal.valueOf(quantityToRemove)));
+                existingItem.setTotalPrice(productPrice.multiply(BigDecimal.valueOf(newQuantity)));
+            }
+        }
+
+        basket.setBasketItems(items);
+        basket.setTotalPrice(totalPrice);
+        return basketRepository.save(basket);
+    }
     private BasketItem findBasketItemByProductId(List<BasketItem> items, Long productId) {
         for (BasketItem item : items) {
             if (item.getProduct().getId().equals(productId)) {
@@ -80,6 +112,10 @@ public class BasketService {
             }
         }
         return null;
+    }
+    public Optional<Basket> getByIdBasket(String basketId)
+    {
+        return basketRepository.findById(basketId);
     }
 
 }
