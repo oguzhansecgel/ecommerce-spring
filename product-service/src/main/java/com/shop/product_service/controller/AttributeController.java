@@ -3,6 +3,7 @@ package com.shop.product_service.controller;
 import com.shop.product_service.dto.request.attribute.CreateAttributeRequest;
 import com.shop.product_service.dto.request.attribute.UpdateAttributeRequest;
 import com.shop.product_service.dto.response.attribute.*;
+import com.shop.product_service.response.ApiResponse;
 import com.shop.product_service.service.AttributeService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,38 +22,38 @@ public class AttributeController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<CreateAttributeResponse> createAttribute(@RequestBody CreateAttributeRequest request) {
-        CreateAttributeResponse response = attributeService.createAttribute(request);
-        return ResponseEntity.status(HttpStatus.CREATED).body(response);
+    public ResponseEntity<ApiResponse<CreateAttributeResponse>> createAttribute(@RequestBody CreateAttributeRequest request) {
+        ApiResponse<CreateAttributeResponse> response = attributeService.createAttribute(request);
+        return ResponseEntity.status(response.getStatus()).body(response);
     }
-
 
     @GetMapping("/get/{id}")
-    public ResponseEntity<GetByIdAttributeResponse> getAttributeById(@PathVariable Long id) {
-        GetByIdAttributeResponse response = attributeService.getAttributeById(id);
-        return ResponseEntity.ok(response);
-    }
-    @GetMapping("/get/all/attribute")
-    public List<GetAllAttributeResponse> getAllAttribute()
-    {
-        return attributeService.getAllAttributes();
-    }
-    @GetMapping("/attribute/with/product/{productId}")
-    public GetAttributeWithProductResponse getAttributeWithProduct(@PathVariable Long productId)
-    {
-        return attributeService.getAttributeWithProduct(productId);
-    }
-    // Attribute güncelleme
-    @PutMapping("/update/{id}")
-    public ResponseEntity<UpdateAttributeResponse> updateAttribute(@PathVariable Long id, @RequestBody UpdateAttributeRequest request) {
-        UpdateAttributeResponse response = attributeService.updateAttribute(id, request);
-        return ResponseEntity.ok(response);
+    public ResponseEntity<ApiResponse<GetByIdAttributeResponse>> getAttributeById(@PathVariable Long id) {
+        ApiResponse<GetByIdAttributeResponse> response = attributeService.getAttributeById(id);
+        return ResponseEntity.status(response.getStatus()).body(response);
     }
 
-    // Attribute silme
+    @GetMapping("/get/all/attribute")
+    public ResponseEntity<ApiResponse<List<GetAllAttributeResponse>>> getAllAttributes() {
+        ApiResponse<List<GetAllAttributeResponse>> response = attributeService.getAllAttributes();
+        return ResponseEntity.status(response.getStatus()).body(response);
+    }
+
+    @GetMapping("/attribute/with/product/{productId}")
+    public ResponseEntity<ApiResponse<GetAttributeWithProductResponse>> getAttributeWithProduct(@PathVariable Long productId) {
+        ApiResponse<GetAttributeWithProductResponse> response = attributeService.getAttributeWithProduct(productId);
+        return ResponseEntity.status(response.getStatus()).body(response);
+    }
+
+    @PutMapping("/update/{id}")
+    public ResponseEntity<ApiResponse<UpdateAttributeResponse>> updateAttribute(@PathVariable Long id, @RequestBody UpdateAttributeRequest request) {
+        ApiResponse<UpdateAttributeResponse> response = attributeService.updateAttribute(id, request);
+        return ResponseEntity.status(response.getStatus()).body(response);
+    }
+
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<Void> deleteAttribute(@PathVariable Long id) {
-        attributeService.deleteAttribute(id);
-        return ResponseEntity.noContent().build();
+    public ResponseEntity<ApiResponse<Void>> deleteAttribute(@PathVariable Long id) {
+        ApiResponse<Void> response = attributeService.deleteAttribute(id);
+        return ResponseEntity.status(response.getStatus()).body(response);
     }
 }

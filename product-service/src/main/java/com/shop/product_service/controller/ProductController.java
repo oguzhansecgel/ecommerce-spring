@@ -6,7 +6,9 @@ import com.shop.product_service.dto.response.product.CreateProductResponse;
 import com.shop.product_service.dto.response.product.GetAllProductResponse;
 import com.shop.product_service.dto.response.product.GetByIdProductResponse;
 import com.shop.product_service.dto.response.product.UpdateProductResponse;
+import com.shop.product_service.response.ApiResponse;
 import com.shop.product_service.service.ProductService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,31 +24,32 @@ public class ProductController {
     }
 
     @GetMapping("/get/by/{id}/product")
-    public GetByIdProductResponse getProductById(@PathVariable Long id) {
-        return productService.getProductById(id);
+    public ResponseEntity<ApiResponse<GetByIdProductResponse>> getProductById(@PathVariable Long id) {
+        ApiResponse<GetByIdProductResponse> response =  productService.getProductById(id);
+        return ResponseEntity.status(response.getStatus()).body(response);
     }
-
     @GetMapping("/get/all/products")
-    public List<GetAllProductResponse> getAllProducts() {
+    public ApiResponse<List<GetAllProductResponse>> getAllProducts() {
         return productService.getAllProducts();
     }
+
     @GetMapping("/get/all/subcategory/{id}")
-    public List<GetAllProductResponse> productsBySubCategory(@PathVariable Long id)
-    {
+    public ApiResponse<List<GetAllProductResponse>> productsBySubCategory(@PathVariable Long id) {
         return productService.productWithSubCategory(id);
     }
+
     @PostMapping("/create/product")
-    public CreateProductResponse createProduct(@RequestBody CreateProductRequest request) {
+    public ApiResponse<CreateProductResponse> createProduct(@RequestBody CreateProductRequest request) {
         return productService.createProduct(request);
     }
 
     @PutMapping("/update/product/{id}")
-    public UpdateProductResponse updateProduct(@PathVariable Long id, @RequestBody UpdateProductRequest request) {
+    public ApiResponse<UpdateProductResponse> updateProduct(@PathVariable Long id, @RequestBody UpdateProductRequest request) {
         return productService.updateProduct(id, request);
     }
 
     @DeleteMapping("/delete/product/{id}")
-    public void deleteProduct(@PathVariable Long id) {
-        productService.deleteProduct(id);
+    public ApiResponse<Void> deleteProduct(@PathVariable Long id) {
+        return productService.deleteProduct(id);
     }
 }

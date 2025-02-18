@@ -7,6 +7,7 @@ import com.shop.product_service.dto.response.category.GetAllCategoryResponse;
 import com.shop.product_service.dto.response.category.GetByIdCategoryResponse;
 import com.shop.product_service.dto.response.category.UpdateCategoryResponse;
 import com.shop.product_service.entity.Category;
+import com.shop.product_service.response.ApiResponse;
 import com.shop.product_service.service.CategoryService;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,29 +23,27 @@ public class CategoryController {
         this.categoryService = categoryService;
     }
     @GetMapping("/get/all/categories")
-    public List<GetAllCategoryResponse> getAllCategory()
-    {
+    public ApiResponse<List<GetAllCategoryResponse>> getAllCategory() {
         return categoryService.getAllCategory();
     }
+
     @GetMapping("/get/by/{id}/category")
-    public GetByIdCategoryResponse getByIdCategory(@PathVariable Long id)
-    {
+    public ApiResponse<GetByIdCategoryResponse> getByIdCategory(@PathVariable Long id) {
         return categoryService.getCategoryById(id);
     }
+
     @DeleteMapping("/delete/category/{id}")
-    public void deleteCategory(@PathVariable Long id)
-    {
-        categoryService.deleteCategory(id);
-    }
-    @PostMapping("/create/category")
-    public CreateCategoryResponse createCategory(@RequestBody CreateCategoryRequest request)
-    {
-        return categoryService.createCategory(request);
-    }
-    @PutMapping("/update/category/{id}")
-    public UpdateCategoryResponse updateCategory(@RequestBody UpdateCategoryRequest request,@PathVariable Long id)
-    {
-        return categoryService.updateCategory(request, id);
+    public ApiResponse<Void> deleteCategory(@PathVariable Long id) {
+        return categoryService.deleteCategory(id);
     }
 
+    @PostMapping("/create/category")
+    public ApiResponse<CreateCategoryResponse> createCategory(@RequestBody CreateCategoryRequest request) {
+        return categoryService.createCategory(request);
+    }
+
+    @PutMapping("/update/category/{id}")
+    public ApiResponse<UpdateCategoryResponse> updateCategory(@RequestBody UpdateCategoryRequest request, @PathVariable Long id) {
+        return categoryService.updateCategory(request, id);
+    }
 }

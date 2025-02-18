@@ -6,14 +6,15 @@ import com.shop.product_service.dto.response.product.CreateProductResponse;
 import com.shop.product_service.dto.response.product.GetAllProductResponse;
 import com.shop.product_service.dto.response.product.GetByIdProductResponse;
 import com.shop.product_service.dto.response.product.UpdateProductResponse;
+import com.shop.product_service.response.ApiResponse;
 
 import java.util.List;
 
 public interface ProductService {
-    CreateProductResponse createProduct(CreateProductRequest request);
-    UpdateProductResponse updateProduct(Long productId, UpdateProductRequest request);
-    void deleteProduct(Long productId);
-    GetByIdProductResponse getProductById(Long productId);
-    List<GetAllProductResponse> getAllProducts();
-    List<GetAllProductResponse> productWithSubCategory(Long subCategoryId);
+    ApiResponse<CreateProductResponse> createProduct(CreateProductRequest request);
+    ApiResponse<UpdateProductResponse> updateProduct(Long productId, UpdateProductRequest request);
+    ApiResponse<Void> deleteProduct(Long productId);
+    ApiResponse<GetByIdProductResponse> getProductById(Long productId);
+    ApiResponse<List<GetAllProductResponse>> getAllProducts();
+    ApiResponse<List<GetAllProductResponse>> productWithSubCategory(Long subCategoryId);
 }

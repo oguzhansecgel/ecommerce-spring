@@ -6,6 +6,7 @@ import com.shop.product_service.dto.response.subcategory.CreateSubCategoryRespon
 import com.shop.product_service.dto.response.subcategory.GetAllSubCategoryResponse;
 import com.shop.product_service.dto.response.subcategory.GetByIdSubCategoryResponse;
 import com.shop.product_service.dto.response.subcategory.UpdateSubCategoryResponse;
+import com.shop.product_service.response.ApiResponse;
 import com.shop.product_service.service.SubCategoryService;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,34 +22,33 @@ public class SubCategoryController {
         this.subCategoryService = subCategoryService;
     }
     @GetMapping("/get/by/{id}/subCategory")
-    public GetByIdSubCategoryResponse getById(@PathVariable Long id)
-    {
+    public ApiResponse<GetByIdSubCategoryResponse> getById(@PathVariable Long id) {
         return subCategoryService.getSubCategoryById(id);
     }
+
     @GetMapping("/get/all/subCategory")
-    public List<GetAllSubCategoryResponse> getAllSubCategory()
-    {
+    public ApiResponse<List<GetAllSubCategoryResponse>> getAllSubCategory() {
         return subCategoryService.getAllSubCategory();
     }
 
     @GetMapping("/get/subcategory/with/category/{categoryId}")
-    public List<GetAllSubCategoryResponse> getAllSubCategoryWithCategory(@PathVariable Long categoryId)
-    {
+    public ApiResponse<List<GetAllSubCategoryResponse>> getAllSubCategoryWithCategory(@PathVariable Long categoryId) {
         return subCategoryService.subCategoryWithCategory(categoryId);
     }
+
     @PostMapping("/create/subCategory")
-    public CreateSubCategoryResponse createSubCategory(@RequestBody CreateSubCategoryRequest request)
-    {
+    public ApiResponse<CreateSubCategoryResponse> createSubCategory(@RequestBody CreateSubCategoryRequest request) {
         return subCategoryService.createSubCategory(request);
     }
+
     @PutMapping("/update/subCategory/{id}")
-    public UpdateSubCategoryResponse updateSubCategory(@PathVariable Long id, @RequestBody UpdateSubCategoryRequest request)
-    {
+    public ApiResponse<UpdateSubCategoryResponse> updateSubCategory(@PathVariable Long id, @RequestBody UpdateSubCategoryRequest request) {
         return subCategoryService.updateSubCategory(request, id);
     }
+
     @DeleteMapping("/delete/subCategory/{id}")
-    public void deleteSubCategory(@PathVariable Long id)
-    {
-        subCategoryService.deleteSubCategory(id);
+    public ApiResponse<Void> deleteSubCategory(@PathVariable Long id) {
+        return subCategoryService.deleteSubCategory(id);
     }
+
 }

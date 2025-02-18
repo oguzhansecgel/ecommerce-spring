@@ -12,9 +12,11 @@ import com.shop.product_service.mapper.ProductMapper;
 import com.shop.product_service.rabbitmq.SearchServicePublisher;
 import com.shop.product_service.repository.ProductRepository;
 import com.shop.product_service.repository.SubCategoryRepository;
+import com.shop.product_service.response.ApiResponse;
 import com.shop.product_service.service.ProductService;
 import events.product.CreateProductEvent;
 import events.product.UpdateProductEvent;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -30,68 +32,98 @@ public class ProductServiceImpl implements ProductService {
         this.subCategoryRepository = subCategoryRepository;
         this.searchServicePublisher = searchServicePublisher;
     }
-
     @Override
-    public CreateProductResponse createProduct(CreateProductRequest request) {
-        SubCategory subCategory = subCategoryRepository.findById(request.getSubCategoryId())
-                .orElseThrow(() -> new RuntimeException("SubCategory not found"));
+    public ApiResponse<CreateProductResponse> createProduct(CreateProductRequest request) {
+        try {
+            SubCategory subCategory = subCategoryRepository.findById(request.getSubCategoryId())
+                    .orElseThrow(() -> new RuntimeException("SubCategory not found"));
 
-        Product product = ProductMapper.dtoToCreateProduct(request, subCategory);
-        Product savedProduct = productRepository.save(product);
-        CreateProductEvent event = new CreateProductEvent();
-        event.setId(product.getId().toString());
-        event.setName(savedProduct.getName());
-        event.setPrice(savedProduct.getPrice());
-        searchServicePublisher.addProductToSearchService(event);
-        return ProductMapper.dtoToCreateProductResponse(savedProduct);
+            Product product = ProductMapper.dtoToCreateProduct(request, subCategory);
+            Product savedProduct = productRepository.save(product);
+            CreateProductEvent event = new CreateProductEvent();
+            event.setId(product.getId().toString());
+            event.setName(savedProduct.getName());
+            event.setPrice(savedProduct.getPrice());
+            searchServicePublisher.addProductToSearchService(event);
+
+            CreateProductResponse response = ProductMapper.dtoToCreateProductResponse(savedProduct);
+            return new ApiResponse<>(HttpStatus.CREATED, "Product created successfully", response, null);
+        } catch (RuntimeException e) {
+            return new ApiResponse<>(HttpStatus.BAD_REQUEST, "Failed to create product", null, List.of(e.getMessage()));
+        }
     }
 
     @Override
-    public UpdateProductResponse updateProduct(Long productId, UpdateProductRequest request) {
-        Product existingProduct = productRepository.findById(productId)
-                .orElseThrow(() -> new RuntimeException("Product not found"));
+    public ApiResponse<UpdateProductResponse> updateProduct(Long productId, UpdateProductRequest request) {
+        try {
+            Product existingProduct = productRepository.findById(productId)
+                    .orElseThrow(() -> new RuntimeException("Product not found"));
 
-        SubCategory subCategory = subCategoryRepository.findById(request.getSubCategoryId())
-                .orElseThrow(() -> new RuntimeException("SubCategory not found"));
+            SubCategory subCategory = subCategoryRepository.findById(request.getSubCategoryId())
+                    .orElseThrow(() -> new RuntimeException("SubCategory not found"));
 
-        Product updatedProduct = ProductMapper.dtoToUpdateProduct(request, subCategory);
-        updatedProduct.setId(existingProduct.getId());
+            Product updatedProduct = ProductMapper.dtoToUpdateProduct(request, subCategory);
+            updatedProduct.setId(existingProduct.getId());
 
-        Product savedProduct = productRepository.save(updatedProduct);
-        UpdateProductEvent event = new UpdateProductEvent();
-        event.setId(productId.toString());
-        event.setName(savedProduct.getName());
-        event.setPrice(savedProduct.getPrice());
-        searchServicePublisher.updateProductToSearchService(event);
-        return ProductMapper.dtoToUpdateProductResponse(savedProduct);
+            Product savedProduct = productRepository.save(updatedProduct);
+            UpdateProductEvent event = new UpdateProductEvent();
+            event.setId(productId.toString());
+            event.setName(savedProduct.getName());
+            event.setPrice(savedProduct.getPrice());
+            searchServicePublisher.updateProductToSearchService(event);
+
+            UpdateProductResponse response = ProductMapper.dtoToUpdateProductResponse(savedProduct);
+            return new ApiResponse<>(HttpStatus.OK, "Product updated successfully", response, null);
+        } catch (RuntimeException e) {
+            return new ApiResponse<>(HttpStatus.BAD_REQUEST, "Failed to update product", null, List.of(e.getMessage()));
+        }
     }
 
     @Override
-    public void deleteProduct(Long productId) {
-        Product existingProduct = productRepository.findById(productId)
-                .orElseThrow(() -> new RuntimeException("Product not found"));
-        searchServicePublisher.deleteProductToSearchService(productId);
-        productRepository.delete(existingProduct);
+    public ApiResponse<Void> deleteProduct(Long productId) {
+        try {
+            Product existingProduct = productRepository.findById(productId)
+                    .orElseThrow(() -> new RuntimeException("Product not found"));
+
+            searchServicePublisher.deleteProductToSearchService(productId);
+            productRepository.delete(existingProduct);
+
+            return new ApiResponse<>(HttpStatus.NO_CONTENT, "Product deleted successfully", null, null);
+        } catch (RuntimeException e) {
+            return new ApiResponse<>(HttpStatus.BAD_REQUEST, "Failed to delete product", null, List.of(e.getMessage()));
+        }
     }
 
     @Override
-    public GetByIdProductResponse getProductById(Long productId) {
-        Product product = productRepository.findById(productId)
-                .orElseThrow(() -> new RuntimeException("Product not found"));
+    public ApiResponse<GetByIdProductResponse> getProductById(Long productId) {
+        try {
+            Product product = productRepository.findById(productId)
+                    .orElseThrow(() -> new RuntimeException("Product not found"));
 
-        return ProductMapper.dtoGetByIdProductResponse(product);
+            GetByIdProductResponse response = ProductMapper.dtoGetByIdProductResponse(product);
+            return new ApiResponse<>(HttpStatus.OK, "Product found", response, null);
+        } catch (RuntimeException e) {
+            return new ApiResponse<>(HttpStatus.NOT_FOUND, "Product not found", null, List.of(e.getMessage()));
+        }
     }
 
     @Override
-    public List<GetAllProductResponse> getAllProducts() {
+    public ApiResponse<List<GetAllProductResponse>> getAllProducts() {
         List<Product> products = productRepository.findAll();
-
-        return ProductMapper.dtoToGetAllProductsResponse(products);
+        List<GetAllProductResponse> response = ProductMapper.dtoToGetAllProductsResponse(products);
+        return new ApiResponse<>(HttpStatus.OK, "All products fetched successfully", response, null);
     }
 
     @Override
-    public List<GetAllProductResponse> productWithSubCategory(Long subCategoryId) {
-        List<Product> product = productRepository.findAllBySubCategoryId(subCategoryId);
-        return ProductMapper.dtoToGetAllProductsResponse(product);
+    public ApiResponse<List<GetAllProductResponse>> productWithSubCategory(Long subCategoryId) {
+        List<Product> products = productRepository.findAllBySubCategoryId(subCategoryId);
+
+        if (products.isEmpty()) {
+            return new ApiResponse<>(HttpStatus.NOT_FOUND, "No products found for the given subcategory", null, List.of("No products found for the given subcategory"));
+        }
+
+        return new ApiResponse<>(HttpStatus.OK, "Products by SubCategory fetched successfully", ProductMapper.dtoToGetAllProductsResponse(products), null);
     }
+
+
 }

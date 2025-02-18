@@ -12,7 +12,9 @@ import com.shop.product_service.mapper.CategoryMapper;
 import com.shop.product_service.mapper.SubCategoryMapper;
 import com.shop.product_service.repository.CategoryRepository;
 import com.shop.product_service.repository.SubCategoryRepository;
+import com.shop.product_service.response.ApiResponse;
 import com.shop.product_service.service.SubCategoryService;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -29,51 +31,91 @@ public class SubCategoryServiceImpl implements SubCategoryService {
     }
 
     @Override
-    public CreateSubCategoryResponse createSubCategory(CreateSubCategoryRequest request) {
-        Category category = categoryRepository.findById(request.getCategoryId())
-                .orElseThrow(() -> new RuntimeException("Category not found"));
+    public ApiResponse<CreateSubCategoryResponse> createSubCategory(CreateSubCategoryRequest request) {
+        try {
+            Category category = categoryRepository.findById(request.getCategoryId())
+                    .orElseThrow(() -> new RuntimeException("Category not found"));
 
-        SubCategory subCategory = SubCategoryMapper.toCreateSubCategoryRequest(request, category);
+            SubCategory subCategory = SubCategoryMapper.toCreateSubCategoryRequest(request, category);
+            SubCategory savedSubCategory = subCategoryRepository.save(subCategory);
 
-        SubCategory savedSubCategory = subCategoryRepository.save(subCategory);
+            CreateSubCategoryResponse response = new CreateSubCategoryResponse(
+                    savedSubCategory.getId(),
+                    savedSubCategory.getName(),
+                    savedSubCategory.getCategory().getId());
 
-        return new CreateSubCategoryResponse(savedSubCategory.getId(),
-                savedSubCategory.getName(),
-                savedSubCategory.getCategory().getId());
+            return new ApiResponse<>(HttpStatus.OK, "SubCategory created successfully", response, null);
+        } catch (Exception e) {
+            return new ApiResponse<>(HttpStatus.BAD_REQUEST, "Failed to create SubCategory", null, List.of(e.getMessage()));
+        }
     }
 
     @Override
-    public UpdateSubCategoryResponse updateSubCategory(UpdateSubCategoryRequest request, Long id) {
-        Category category = categoryRepository.findById(request.getCategoryId())
-                .orElseThrow(() -> new RuntimeException("Category not found"));
-        SubCategory subCategory = subCategoryRepository.findById(id).get();
-        subCategory.setName(request.getName());
-        subCategory.setCategory(category);
-        SubCategory savedSubCategory = subCategoryRepository.save(subCategory);
-        return new UpdateSubCategoryResponse(savedSubCategory.getId(), savedSubCategory.getName(), savedSubCategory.getCategory().getId());
+    public ApiResponse<UpdateSubCategoryResponse> updateSubCategory(UpdateSubCategoryRequest request, Long id) {
+        try {
+            Category category = categoryRepository.findById(request.getCategoryId())
+                    .orElseThrow(() -> new RuntimeException("Category not found"));
+
+            SubCategory subCategory = subCategoryRepository.findById(id)
+                    .orElseThrow(() -> new RuntimeException("SubCategory not found"));
+
+            subCategory.setName(request.getName());
+            subCategory.setCategory(category);
+
+            SubCategory savedSubCategory = subCategoryRepository.save(subCategory);
+            UpdateSubCategoryResponse response = new UpdateSubCategoryResponse(
+                    savedSubCategory.getId(),
+                    savedSubCategory.getName(),
+                    savedSubCategory.getCategory().getId());
+
+            return new ApiResponse<>(HttpStatus.OK, "SubCategory updated successfully", response, null);
+        } catch (RuntimeException e) {
+            return new ApiResponse<>(HttpStatus.NOT_FOUND, "Failed to update SubCategory", null, List.of(e.getMessage()));
+        }
     }
 
     @Override
-    public List<GetAllSubCategoryResponse> getAllSubCategory() {
+    public ApiResponse<List<GetAllSubCategoryResponse>> getAllSubCategory() {
         List<SubCategory> subCategories = subCategoryRepository.findAll();
-        return SubCategoryMapper.dtoToGetAllSubCategoryResponse(subCategories);
+        List<GetAllSubCategoryResponse> response = SubCategoryMapper.dtoToGetAllSubCategoryResponse(subCategories);
+        return new ApiResponse<>(HttpStatus.OK, "All subcategories fetched successfully", response, null);
     }
 
     @Override
-    public GetByIdSubCategoryResponse getSubCategoryById(Long id) {
-        SubCategory subCategory = subCategoryRepository.findById(id).get();
-        return SubCategoryMapper.dtoGetByIdSubCategoryResponse(subCategory);
+    public ApiResponse<GetByIdSubCategoryResponse> getSubCategoryById(Long id) {
+        try {
+            SubCategory subCategory = subCategoryRepository.findById(id)
+                    .orElseThrow(() -> new RuntimeException("SubCategory not found"));
+
+            GetByIdSubCategoryResponse response = SubCategoryMapper.dtoGetByIdSubCategoryResponse(subCategory);
+            return new ApiResponse<>(HttpStatus.OK, "SubCategory found", response, null);
+        } catch (RuntimeException e) {
+            return new ApiResponse<>(HttpStatus.NOT_FOUND, "SubCategory not found", null, List.of(e.getMessage()));
+        }
     }
 
     @Override
-    public void deleteSubCategory(Long id) {
-        SubCategory subCategory = subCategoryRepository.findById(id).get();
-        subCategoryRepository.delete(subCategory);
+    public ApiResponse<Void> deleteSubCategory(Long id) {
+        try {
+            SubCategory subCategory = subCategoryRepository.findById(id)
+                    .orElseThrow(() -> new RuntimeException("SubCategory not found"));
+
+            subCategoryRepository.delete(subCategory);
+            return new ApiResponse<>(HttpStatus.OK, "SubCategory deleted successfully", null, null);
+        } catch (RuntimeException e) {
+            return new ApiResponse<>(HttpStatus.NOT_FOUND, "Failed to delete SubCategory", null, List.of(e.getMessage()));
+        }
     }
 
     @Override
-    public List<GetAllSubCategoryResponse> subCategoryWithCategory(Long categoryId) {
-        List<SubCategory> subCategories = subCategoryRepository.findSubCategoriesByCategory_Id(categoryId);
-        return SubCategoryMapper.dtoToGetAllSubCategoryResponse(subCategories);
+    public ApiResponse<List<GetAllSubCategoryResponse>> subCategoryWithCategory(Long categoryId) {
+        try {
+            List<SubCategory> subCategories = subCategoryRepository.findSubCategoriesByCategory_Id(categoryId);
+            List<GetAllSubCategoryResponse> response = SubCategoryMapper.dtoToGetAllSubCategoryResponse(subCategories);
+            return new ApiResponse<>(HttpStatus.OK, "SubCategories with category fetched successfully", response, null);
+        } catch (Exception e) {
+            return new ApiResponse<>(HttpStatus.BAD_REQUEST, "Failed to fetch subcategories with category", null, List.of(e.getMessage()));
+        }
     }
+
 }

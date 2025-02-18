@@ -7,15 +7,15 @@ import com.shop.product_service.dto.response.subcategory.GetAllSubCategoryRespon
 import com.shop.product_service.dto.response.subcategory.GetByIdSubCategoryResponse;
 import com.shop.product_service.dto.response.subcategory.UpdateSubCategoryResponse;
 import com.shop.product_service.entity.SubCategory;
+import com.shop.product_service.response.ApiResponse;
 
 import java.util.List;
 
 public interface SubCategoryService {
-
-    CreateSubCategoryResponse createSubCategory(CreateSubCategoryRequest request);
-    UpdateSubCategoryResponse updateSubCategory(UpdateSubCategoryRequest request,Long id);
-    List<GetAllSubCategoryResponse> getAllSubCategory();
-    GetByIdSubCategoryResponse getSubCategoryById(Long id);
-    void deleteSubCategory(Long id);
-    List<GetAllSubCategoryResponse> subCategoryWithCategory(Long categoryId);
+    ApiResponse<CreateSubCategoryResponse> createSubCategory(CreateSubCategoryRequest request);
+    ApiResponse<UpdateSubCategoryResponse> updateSubCategory(UpdateSubCategoryRequest request, Long id);
+    ApiResponse<List<GetAllSubCategoryResponse>> getAllSubCategory();
+    ApiResponse<GetByIdSubCategoryResponse> getSubCategoryById(Long id);
+    ApiResponse<Void> deleteSubCategory(Long id);
+    ApiResponse<List<GetAllSubCategoryResponse>> subCategoryWithCategory(Long categoryId);
 }
