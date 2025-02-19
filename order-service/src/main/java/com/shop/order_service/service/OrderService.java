@@ -11,6 +11,6 @@ public interface OrderService {
     List<Order> getAllOrder();
     Optional<Order> getByIdOrder(String orderId);
     List<Order> getOrderHistoryForCustomer(Integer customerId);
-
     void deleteOrder(String id);
+    void updateStatusOrder(String orderId);
 }

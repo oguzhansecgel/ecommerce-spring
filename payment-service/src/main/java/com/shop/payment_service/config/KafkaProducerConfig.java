@@ -2,6 +2,7 @@ package com.shop.payment_service.config;
 
 
 import events.payment.PaymentFailedEvent;
+import events.payment.PaymentSuccessEvent;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringSerializer;
 import org.springframework.beans.factory.annotation.Value;
@@ -32,6 +33,10 @@ public class KafkaProducerConfig {
 
     @Bean
     public KafkaTemplate<String, PaymentFailedEvent> paymentFailedEventKafkaTemplate() {
+        return new KafkaTemplate<>(createProducerFactory());
+    }
+    @Bean
+    public KafkaTemplate<String, PaymentSuccessEvent> paymentSuccessEventKafkaTemplate() {
         return new KafkaTemplate<>(createProducerFactory());
     }
 }

@@ -66,4 +66,15 @@ public class OrderServiceImpl implements OrderService {
         log.info("Deleting order with id {}", id);
         orderRepository.deleteById(id);
     }
+
+    @Override
+    public void updateStatusOrder(String orderId) {
+        Optional<Order> order = orderRepository.findById(orderId);
+        if (order.isPresent())
+        {
+            log.info("Updating status of order with id {}", orderId);
+            order.get().setStatus("COMPLETED");
+            orderRepository.save(order.get());
+        }
+    }
 }

@@ -3,6 +3,7 @@ package com.shop.order_service.kafka.consumer;
 import com.shop.order_service.service.OrderService;
 import events.order.CreateOrderEvent;
 import events.payment.PaymentFailedEvent;
+import events.payment.PaymentSuccessEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.kafka.annotation.KafkaListener;
@@ -19,10 +20,18 @@ public class PaymentConsumer {
     }
 
     @KafkaListener(topics = "${spring.kafka.template.payment-failed-topic}", groupId = "${spring.kafka.consumer.group-id}")
-    public void consume(PaymentFailedEvent event)
+    public void paymentFailedConsume(PaymentFailedEvent event)
     {
-        log.info("Order Created Event Consume"+event);
+        log.info("Payment Failed Order Deleted"+event);
         orderService.deleteOrder(event.getOrderId());
 
     }
+    @KafkaListener(topics = "${spring.kafka.template.payment-success-topic}", groupId = "${spring.kafka.consumer.group-id}",containerFactory = "paymentSuccessEventConcurrentKafkaListenerContainerFactory")
+    public void PaymentSuccessConsume(PaymentSuccessEvent event)
+    {
+        log.info("Payment Successful Order Type Changed to Completed"+event);
+        orderService.updateStatusOrder(event.getOrderId());
+
+    }
+
 }

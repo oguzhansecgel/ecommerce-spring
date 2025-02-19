@@ -5,6 +5,7 @@ import com.shop.payment_service.kafka.producer.OrderProducer;
 import com.shop.payment_service.model.Payment;
 import events.order.CreateOrderEvent;
 import events.payment.PaymentFailedEvent;
+import events.payment.PaymentSuccessEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -34,27 +35,29 @@ public class PaymentService {
             payment.setCardNumber(request.getCardNumber());
             payment.setOrderId(request.getOrderId());
             payment.setAmount(cachedOrderEvent.getAmount());
-            boolean paymentSuccess = paymentStatus(payment);
+            boolean paymentSuccess = paymentStatus();
             if(paymentSuccess)
             {
-                log.info("Order Silme İşlemi Başarılı");
-                PaymentFailedEvent event = new PaymentFailedEvent();
-                event.setOrderId(request.getOrderId());
-                orderProducer.sendMessage(event);
+                PaymentSuccessEvent paymentSuccessEvent = new PaymentSuccessEvent();
+                paymentSuccessEvent.setOrderId(payment.getOrderId());
+                orderProducer.paymentSuccessSendMessage(paymentSuccessEvent);
             }
             else
-                log.info("warn");
+            {
+                log.info("Ödeme adımında bir hata oluştu. Sipariş iptal edildi.");
+                PaymentFailedEvent event = new PaymentFailedEvent();
+                event.setOrderId(request.getOrderId());
+                orderProducer.paymentFailSendMessage(event);
+            }
         }catch (Exception e)
         {
             System.out.println("error"+e);
         }
 
     }
-    private boolean paymentStatus(Payment payment)
+    private boolean paymentStatus()
     {
-        BigDecimal threshold = new BigDecimal(5);
-
-        return payment.getAmount().compareTo(threshold) >= 0;
+       return true;
     }
 
 }
