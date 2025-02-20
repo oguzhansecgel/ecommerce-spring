@@ -1,0 +1,1129 @@
+{
+	"info": {
+		"_postman_id": "fd913808-67d6-4da0-97c8-22aae2f6d76b",
+		"name": "ecommerce-spring",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "28806518"
+	},
+	"item": [
+		{
+			"name": "Product-service",
+			"item": [
+				{
+					"name": "product",
+					"item": [
+						{
+							"name": "delete/product/{productId}",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/v1/product/delete/product/{productId}",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"product",
+										"delete",
+										"product",
+										"{productId}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "product/get/by/{productId}",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/v1/product/get/by/{id}/product",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"product",
+										"get",
+										"by",
+										"{id}",
+										"product"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get/all/products",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/v1/product/get/all/products",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"product",
+										"get",
+										"all",
+										"products"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/get/all/subcategory/{subcategoryId}",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/v1/product/get/all/subcategory/{subcategoryId}",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"product",
+										"get",
+										"all",
+										"subcategory",
+										"{subcategoryId}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "create/product",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\":\"product-name\",\r\n    \"price\":100,\r\n    \"description\":\"product-description\",\r\n    \"stock\":1,\r\n    \"subCategoryId\":1\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/v1/product/create/product",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"product",
+										"create",
+										"product"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update/product",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\":\"product-name\",\r\n    \"price\":100,\r\n    \"description\":\"product-description\",\r\n    \"stock\":1,\r\n    \"subCategoryId\":1\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/v1/update/product/{productId}",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"update",
+										"product",
+										"{productId}"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "category",
+					"item": [
+						{
+							"name": "get/all/categories",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/v1/category/get/all/categories",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"category",
+										"get",
+										"all",
+										"categories"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get/by/id/category",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/v1/category/get/by/{categoryId}/category",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"category",
+										"get",
+										"by",
+										"{categoryId}",
+										"category"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "delete/category",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/v1/category/delete/category/{CategoryId}",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"category",
+										"delete",
+										"category",
+										"{CategoryId}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "create/category",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\":\"category-name\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/v1/category/create/category",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"category",
+										"create",
+										"category"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update/category",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\":\"category-name\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/v1/category/update/category/{categoryId}",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"category",
+										"update",
+										"category",
+										"{categoryId}"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "subcategory",
+					"item": [
+						{
+							"name": "get/by/{subCategoryId}/subCategory",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/v1/subCategory/get/by/{subCategoryId}/subCategory",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"subCategory",
+										"get",
+										"by",
+										"{subCategoryId}",
+										"subCategory"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get/all/subCategory",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/v1/subCategory/get/all/subCategory",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"subCategory",
+										"get",
+										"all",
+										"subCategory"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get/subcategory/with/category/{categoryId}",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/v1/subCategory/get/subcategory/with/category/{categoryId}",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"subCategory",
+										"get",
+										"subcategory",
+										"with",
+										"category",
+										"{categoryId}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "create/subCategory",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\":\"Subcategory-name\",\r\n    \"categoryId\":1\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/v1/subCategory/create/subCategory",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"subCategory",
+										"create",
+										"subCategory"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update/subCategory/{id}",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\":\"Subcategory-name\",\r\n    \"categoryId\":1\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/v1/subCategory/update/subCategory/{id}",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"subCategory",
+										"update",
+										"subCategory",
+										"{id}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "delete/subCategory/{id}",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/v1/subCategory/delete/subCategory/{id}",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"subCategory",
+										"delete",
+										"subCategory",
+										"{id}"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "product-attributes",
+					"item": [
+						{
+							"name": "get/all/attribute",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/v1/attribute/get/all/attribute",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"attribute",
+										"get",
+										"all",
+										"attribute"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get/{id}",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/v1/attribute/get/{id}",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"attribute",
+										"get",
+										"{id}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "create",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"key\":\"Ram\",\r\n    \"value\":\"2 GB\",\r\n    \"productId\":2\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/v1/attribute/create",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"attribute",
+										"create"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "attribute/with/product/{productId}",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/v1/attribute/attribute/with/product/{productId}",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"attribute",
+										"attribute",
+										"with",
+										"product",
+										"{productId}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update/{id}",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"key\":\"Ram\",\r\n    \"value\":\"2 GB\",\r\n    \"productId\":2\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/v1/attribute/update/{id}",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"attribute",
+										"update",
+										"{id}"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Customer-service",
+			"item": [
+				{
+					"name": "Auth",
+					"item": [
+						{
+							"name": "logout",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/v1/auth/logout",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"auth",
+										"logout"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "register",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJvZ3V6aGFuLnNlY2dlbC4xOUBnbWFpbC5jb20iLCJpYXQiOjE3MzE5Mzc4MTQsImV4cCI6MTczMTkzODQxNCwicm9sZXMiOltdLCJ1c2VySWQiOjExNTJ9.3cVr-q1O1lmbCpBVDfwgihcty7gbfFJr6PbLaiTYNohOepKgnYsqiRzqGz_rTBdWLU69tO0xikvmUdLA-RxiSA",
+										"type": "default",
+										"disabled": true
+									},
+									{
+										"key": "x-apisports-key",
+										"value": "97e30cc133e4cb5ca467c88d057e7b70",
+										"type": "default",
+										"disabled": true
+									},
+									{
+										"key": "X-Auth-Token",
+										"value": "23c8b015a1c84ab88b4cf17586505806",
+										"type": "default",
+										"disabled": true
+									},
+									{
+										"key": "Accept-Language",
+										"value": "en",
+										"type": "default"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"firstname\": \"Oğuzhan\",\r\n  \"lastname\": \"Seçgel\",\r\n  \"email\": \"ı\",\r\n  \"password\": \"ı\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/v1/auth/register",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"auth",
+										"register"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "login",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"email\": \"ı\",\r\n  \"password\": \"ı\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/v1/auth/login",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"auth",
+										"login"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "refresh-token",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"refreshToken\":\"ey\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/v1/auth/refresh-token",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"auth",
+										"refresh-token"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/user/info/{customerId}",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/v1/auth/user/info/{customerId}",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"auth",
+										"user",
+										"info",
+										"{customerId}"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Address",
+					"item": [
+						{
+							"name": "address/get/by/address/with/customer",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiQ1VTVE9NRVIiLCJjdXN0b21lcklkIjoyNiwic3ViIjoicSIsImlhdCI6MTczOTExODMzMSwiZXhwIjoxNzM5MTE5NzcxfQ.8BDDWoLs0ywLZ-MOcUh0HwV1_3olzVgkixdyYaT1C_8",
+										"type": "default"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:8080/api/v1/address/get/by/address/with/customer",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"address",
+										"get",
+										"by",
+										"address",
+										"with",
+										"customer"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get/by/{id}",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/v1/address/{id}",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"address",
+										"{id}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get/all",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/v1/address/all",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"address",
+										"all"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "create/address",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"street\": \"Elm Street\",\r\n  \"buildingNumber\": \"12A\",\r\n  \"apartmentNumber\": \"5\",\r\n  \"district\": \"Greenwood\",\r\n  \"city\": \"Springfield\",\r\n  \"state\": \"Illinois\",\r\n  \"country\": \"United States\",\r\n  \"zipcode\": \"62704\",\r\n  \"addressLabel\": \"Home\",\r\n  \"userId\": 101\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/v1/address/create/address",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"address",
+										"create",
+										"address"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update/{id}",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/v1/address/update/{id}",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"address",
+										"update",
+										"{id}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "delete/{id}",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/v1/address/delete/{id}",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"address",
+										"delete",
+										"{id}"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Search-service",
+			"item": []
+		},
+		{
+			"name": "Order-service",
+			"item": [
+				{
+					"name": "create-order",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiUk9MRV9DVVNUT01FUiIsInN1cm5hbWUiOiLEsSIsImN1c3RvbWVySWQiOjYsIm5hbWUiOiLEsSIsInN1YiI6IsSxIiwiaWF0IjoxNzM5OTU0ODg1LCJleHAiOjE3Mzk5NTUxODV9.nynXsdKeNxDuAZdBKV46vEyctmeopBciQV7jcZ8L-h4",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/order/create-order/67b2307c3e1fe2779ec1f01a",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"order",
+								"create-order",
+								"67b2307c3e1fe2779ec1f01a"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "customer-order-history",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiUk9MRV9DVVNUT01FUiIsInN1cm5hbWUiOiLEsSIsImN1c3RvbWVySWQiOjYsIm5hbWUiOiLEsSIsInN1YiI6IsSxIiwiaWF0IjoxNzM5OTU1Mjg5LCJleHAiOjE3Mzk5NTU1ODl9.oRvBNWrRX2VuY_umLpk0uOB4MLJkcbgQZRpDRIdTaD4",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/order/customer/order/history/6",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"order",
+								"customer",
+								"order",
+								"history",
+								"6"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Basket-service",
+			"item": [
+				{
+					"name": "customer-basket",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/basket/find/basket/by/customer/6",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"basket",
+								"find",
+								"basket",
+								"by",
+								"customer",
+								"6"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Payment-service",
+			"item": [
+				{
+					"name": "payment",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiUk9MRV9DVVNUT01FUiIsInN1cm5hbWUiOiLEsSIsImN1c3RvbWVySWQiOjYsIm5hbWUiOiLEsSIsInN1YiI6IsSxIiwiaWF0IjoxNzM5OTU1Mjg5LCJleHAiOjE3Mzk5NTU1ODl9.oRvBNWrRX2VuY_umLpk0uOB4MLJkcbgQZRpDRIdTaD4",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"cardNumber\":123,\r\n    \"cvv\":123,\r\n    \"orderId\":\"67b59acc2928d65879b48224\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/payment/payment",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"payment",
+								"payment"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
