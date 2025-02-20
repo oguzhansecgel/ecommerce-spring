@@ -12,34 +12,34 @@ scrape_configs:
     scrape_interval: 15s
     scrape_timeout: 10s
     static_configs:
-      - targets: [ 'ip:8081' ]
+      - targets: [ '192.168.1.127:8081' ]
   - job_name: 'customer-service'
     metrics_path: '/actuator/prometheus'
     scrape_interval: 15s
     scrape_timeout: 10s
     static_configs:
-      - targets: [ 'ip:8082' ]
+      - targets: [ '192.168.1.127:8082' ]
   - job_name: 'search-service'
     metrics_path: '/actuator/prometheus'
     scrape_interval: 15s
     scrape_timeout: 10s
     static_configs:
-      - targets: [ 'ip:8083' ]
+      - targets: [ '192.168.1.127:8083' ]
   - job_name: 'basket-service'
     metrics_path: '/actuator/prometheus'
     scrape_interval: 15s
     scrape_timeout: 10s
     static_configs:
-      - targets: [ 'ip:8084' ]
+      - targets: [ '192.168.1.127:8084' ]
   - job_name: 'order-service'
     metrics_path: '/actuator/prometheus'
     scrape_interval: 15s
     scrape_timeout: 10s
     static_configs:
-      - targets: [ 'ip:8085' ]
+      - targets: [ '192.168.1.127:8085' ]
   - job_name: 'payment-service'
     metrics_path: '/actuator/prometheus'
     scrape_interval: 15s
     scrape_timeout: 10s
     static_configs:
-      - targets: [ 'ip:8086' ]
+      - targets: [ '192.168.1.127:8086' ]

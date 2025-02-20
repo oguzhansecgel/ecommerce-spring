@@ -31,8 +31,6 @@ services:
       - "5601:5601"
     networks:
       - common
-
-
   rabbitmq:
     image: rabbitmq:4.0-management
     container_name: rabbitmq

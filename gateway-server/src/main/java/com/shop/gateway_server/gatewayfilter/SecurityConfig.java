@@ -31,7 +31,6 @@ public class SecurityConfig {
                                 .pathMatchers("/api/v1/auth/**").permitAll()
                                 .pathMatchers("/api/v1/product/**").permitAll()
                                 .pathMatchers("/api/v1/search/**").permitAll()
-                                .pathMatchers("/api/v1/basket/**").permitAll()
                                 .anyExchange().permitAll()
                 )
                 .addFilterBefore(jwtAuthenticationFilter, SecurityWebFiltersOrder.AUTHENTICATION)
