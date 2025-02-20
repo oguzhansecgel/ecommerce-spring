@@ -1,7 +1,5 @@
 # E-Ticaret Sitesi - Microservice Mimari
 
-🚀 **Proje Hakkında** 🚀
-
 Projenin ana odak noktası **Gateway ile Auth işlemleri** ve **Saga Pattern** kullanımıdır. Merkezi **auth** işlemleri için **Keycloak**, **AbstractGatewayFilter** ve **WebFilter** ile alakalı dökümantasyonlar ve projeler araştırılmıştır. Bu dökümantasyonlar doğrultusunda, yetkilendirme işlemi için **WebFilter** seçilmiştir. Gelişimimi ve hata payını en aza indirmek amacıyla geri dönüşleriniz benim için çok önemli.
 
 Bu proje, **microservice mimarisi** kullanarak geliştirilmiş bir **e-ticaret sitesi** uygulamasıdır. Projede **Gateway Server** ile merkezi **auth** işlemleri yapılmış ve **Saga Pattern** kullanılarak **transactional işlemler** gerçekleştirilmiştir. Proje, modern yazılım geliştirme prensiplerine dayalı olarak **Java 17**, **Spring Boot**, ve **Spring Cloud** gibi güçlü teknolojiler ile geliştirilmiştir. Ayrıca, **Spring Security** ile güvenlik sağlanmış ve **Kafka**, **RabbitMQ** gibi mesajlaşma sistemleriyle mikroservisler arasında iletişim kurulmuştur.
